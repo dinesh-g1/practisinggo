@@ -1,8 +1,6 @@
 package github
 
 import (
-	//"encoding/json"
-
 	"encoding/json"
 	"fmt"
 	"log"
@@ -23,11 +21,13 @@ func APIPractice() {
 	fmt.Println(name, repos)
 }
 
-func githubInfo(login string) (string, int, error) {
-	resp, err := http.Get(login)
+func githubInfo(url string) (string, int, error) {
+	resp, err := http.Get(url)
 	if err != nil {
 		return "", 0, err
 	}
+	defer resp.Body.Close()
+	
 	var rep Reply
 	if resp.StatusCode == http.StatusOK {
 		dec := json.NewDecoder(resp.Body)
