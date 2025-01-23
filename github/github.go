@@ -3,25 +3,40 @@ package github
 import (
 	//"encoding/json"
 
-	"io"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"os"
 )
 
+type Reply struct {
+	Name        string
+	PublicRepos int `json:"public_repos"`
+}
+
 func APIPractice() {
-	resp, err := http.Get("https://api.github.com/users/dinesh-g1")
+	url := "https://api.github.com/users/dinesh-g1"
+	name, repos, err := githubInfo(url)
 	if err != nil {
-		log.Fatalf("error: %v", err)
+		log.Fatalf("error %v occurred", err)
 	}
+	fmt.Println(name, repos)
+}
 
-	if resp.StatusCode != http.StatusOK {
+func githubInfo(login string) (string, int, error) {
+	resp, err := http.Get(login)
+	if err != nil {
+		return "", 0, err
+	}
+	var rep Reply
+	if resp.StatusCode == http.StatusOK {
+		dec := json.NewDecoder(resp.Body)
+		err = dec.Decode(&rep)
 		if err != nil {
-			log.Fatalf("error: %v", err)
+			return "", 0, err
 		}
-	}
-
-	if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
-		log.Fatalf("error: can't copy - %v", err.Error())
+		return rep.Name, rep.PublicRepos, nil
+	} else {
+		return "", 0, err
 	}
 }
