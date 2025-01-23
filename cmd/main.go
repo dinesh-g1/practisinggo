@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	runes and bytes in strings
+	//runes and bytes in strings
 	s := "తెలుగులో 56 అక్షరాలు ఏవి"
 	lenS := 0
 	for _ , _ = range s {
