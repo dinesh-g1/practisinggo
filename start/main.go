@@ -1,9 +1,16 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
+	"github.com/gdinesh/banner"
 )
 
 func main() {
-	fmt.Println("starting the go")
+	s := "తెలుగులో 56 అక్షరాలు ఏవి"
+	lenS := 0
+	for _ , _ = range s {
+		//fmt.Print(string(r), ":")
+		lenS++
+	}
+	banner.Banner(s, lenS + 10)
 }
