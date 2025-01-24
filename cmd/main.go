@@ -22,8 +22,10 @@ func main() {
 	//Palindrome
 	fmt.Println(p.IsPalindrome("A man, a plan, a canal: Panama"))
 
+	//API Request Response explorer
 	github.APIPractice()
 
+	// Working with Reader and Writer
 	fileName := "sha1/http.log.gz"
 	fmt.Println(sha1.Sha1Sum(fileName))
 }
