@@ -7,8 +7,9 @@ import (
 func main() {
 	i := NewItem(10, 20)
 	p1 := Player{Name: "dinesh", Item: NewItem(10, 20)}
-
-	movers := []Mover{&i, &p1}
+	jcb := JCB{Another: "dinesh", Mover: &p1}
+	jcb.Move(10,20)
+	movers := []Mover{&i, &p1, jcb}
 	for _, v := range movers {
 		switch v.(type) {
 		case *Item:
@@ -23,6 +24,11 @@ func main() {
 
 type Mover interface {
 	Move(int, int)
+}
+
+type JCB struct {
+	Another string
+	Mover
 }
 
 type Player struct {
