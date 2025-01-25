@@ -33,5 +33,9 @@ func wordFrequency(content io.Reader) (map[string]int, error) {
 		}
 	}
 
+	if err := sc.Err(); err != nil {
+		return nil, err
+	}
+
 	return wordFreq, nil
 }
