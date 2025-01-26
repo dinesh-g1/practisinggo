@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -16,12 +17,15 @@ func main() {
 
 	strChan := make(chan string) //create a channel with a type
 	go func() {
-		for i := 0; i < 5; i++ {
-			strChan <- fmt.Sprintf("val%d", i+1)
+		i := 1
+		for i < 5 {
+			strChan <- fmt.Sprintf("val - %d", i)
+			i++
+			time.Sleep(time.Second * 2)
 		}
 		close(strChan)
 	}()
- 
+
 	for v := range strChan {
 		fmt.Println(v)
 	}
