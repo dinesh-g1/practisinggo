@@ -21,7 +21,7 @@ func main() {
 		for i < 5 {
 			strChan <- fmt.Sprintf("val - %d", i)
 			i++
-			time.Sleep(time.Second * 2)
+			//time.Sleep(time.Second * 2)
 		}
 		close(strChan)
 	}()
@@ -29,4 +29,26 @@ func main() {
 	for v := range strChan {
 		fmt.Println(v)
 	}
+	fmt.Println("------------------------------------------------------------")
+	values := []int{345, 243, 454, 76, 832, 233}
+	fmt.Println(sleepSort(values))
+}
+
+func sleepSort(values []int) []int {
+	vChannel := make(chan int)
+	for _, v := range values {
+		v := v
+		go func() {
+			time.Sleep(time.Millisecond * time.Duration(v))
+			vChannel <- v
+		}()
+	}
+
+	s := make([]int, 0, len(values))
+	for range values {
+		n := <-vChannel
+		s = append(s, n)
+	}
+
+	return s
 }
